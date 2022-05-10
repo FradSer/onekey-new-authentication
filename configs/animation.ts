@@ -10,4 +10,6 @@ const baseEaseTranstion = {
 
 const DELAY = 0.8
 
-export { baseSpringTranstion, baseEaseTranstion, DELAY }
+const DURATION = 0.8
+
+export { baseSpringTranstion, baseEaseTranstion, DELAY, DURATION }
