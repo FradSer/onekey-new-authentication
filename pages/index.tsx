@@ -1,82 +1,120 @@
 import Head from 'next/head'
+import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react'
+
+import Logo from '../components/Logo'
+
+function Title() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-3 first-letter:text-base">
+      <svg width="104" height="33" viewBox="0 0 104 33">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M11.6478 24.6428C9.54339 24.6428 7.60211 24.1485 5.82389 23.1597C4.04568 22.1711 2.63048 20.7625 1.57829 18.934C0.526092 17.1054 0 14.9793 0 12.5554C0 10.1103 0.526092 7.97885 1.57829 6.16095C2.63048 4.34306 4.04568 2.94511 5.82389 1.96706C7.60211 0.989015 9.54339 0.5 11.6478 0.5C13.7522 0.5 15.6935 0.989015 17.4717 1.96706C19.2499 2.94511 20.6651 4.34306 21.7173 6.16095C22.7695 7.97885 23.2955 10.1103 23.2955 12.5554C23.2955 14.9793 22.7695 17.1054 21.7173 18.934C20.6651 20.7625 19.2499 22.1711 17.4717 23.1597C15.6935 24.1485 13.7522 24.6428 11.6478 24.6428ZM11.6478 21.4215C13.0998 21.4215 14.4255 21.0762 15.625 20.3851C16.8245 19.694 17.7768 18.6842 18.4817 17.3552C19.1867 16.0265 19.5392 14.4371 19.5392 12.5873C19.5392 10.7163 19.1867 9.11634 18.4817 7.78748C17.7768 6.4586 16.8299 5.454 15.6408 4.77362C14.4518 4.09323 13.1208 3.75305 11.6478 3.75305C10.1747 3.75305 8.8384 4.09323 7.6389 4.77362C6.4394 5.454 5.49242 6.4586 4.79798 7.78748C4.10352 9.11634 3.7563 10.7163 3.7563 12.5873C3.7563 14.4371 4.11405 16.0265 4.82954 17.3552C5.54503 18.6842 6.50778 19.694 7.7178 20.3851C8.92784 21.0762 10.2378 21.4215 11.6478 21.4215ZM28.9383 9.68512H25.5924V24.3238H29.0015V17.0523C29.0015 16.0531 29.2171 15.1813 29.6487 14.4371C30.0801 13.693 30.6218 13.1242 31.2743 12.7309C31.9266 12.3375 32.5684 12.1409 33.1998 12.1409C34.3151 12.1409 35.0517 12.5502 35.4093 13.3687C35.7672 14.1873 35.9459 15.5215 35.9459 17.3712V24.3238H39.3551V17.2755C39.3551 15.4683 39.2184 14.0013 38.9447 12.8744C38.6711 11.7475 38.1345 10.8705 37.3349 10.2432C36.5352 9.61603 35.3883 9.30242 33.8943 9.30242C32.7369 9.30242 31.7267 9.58945 30.8639 10.1635C30.001 10.7376 29.3697 11.4711 28.97 12.3641L28.9383 9.68512ZM49.1644 24.6428C47.4389 24.6428 45.9974 24.2972 44.84 23.6063C43.6826 22.9152 42.8303 21.9905 42.2832 20.8317C41.736 19.6729 41.4625 18.4025 41.4625 17.0205C41.4625 15.4683 41.7833 14.1076 42.4251 12.9382C43.0671 11.7688 43.9562 10.8705 45.0924 10.2432C46.2288 9.61603 47.5126 9.30242 48.9435 9.30242C51.1742 9.30242 52.8314 9.92432 53.9151 11.1681C54.9989 12.412 55.5409 14.1607 55.5409 16.4145C55.5409 16.9886 55.5092 17.5838 55.4462 18.2005H45.0294C45.2609 19.4974 45.7186 20.4329 46.4026 21.0071C47.0864 21.5811 48.0387 21.8682 49.2591 21.8682C50.2693 21.8682 51.1005 21.7831 51.7529 21.6129C52.4053 21.4429 53.005 21.2091 53.5521 20.9114L54.5938 23.3671C54.0677 23.7072 53.3523 24.0049 52.4474 24.2602C51.5424 24.5152 50.4482 24.6428 49.1644 24.6428ZM51.3742 13.0178C51.9635 13.56 52.2474 14.4902 52.2264 15.8084H45.0294C45.3661 13.4058 46.6394 12.2046 48.8489 12.2046C49.9431 12.2046 50.7849 12.4757 51.3742 13.0178ZM63.2669 13.8312L61.3729 16.1912V24.3238H57.9007V0.882743H61.3729V11.3435L69.3275 0.882743H73.5574L65.5712 11.1841L74.6936 24.3238H70.3692L63.2669 13.8312ZM77.5587 23.6063C78.7161 24.2972 80.1577 24.6428 81.8833 24.6428C83.167 24.6428 84.2612 24.5152 85.1661 24.2602C86.071 24.0049 86.7866 23.7072 87.3126 23.3671L86.271 20.9114C85.7237 21.2091 85.1241 21.4429 84.4716 21.6129C83.8193 21.7831 82.988 21.8682 81.978 21.8682C80.7574 21.8682 79.8052 21.5811 79.1213 21.0071C78.4373 20.4329 77.9796 19.4974 77.7481 18.2005H88.1649C88.2279 17.5838 88.2596 16.9886 88.2596 16.4145C88.2596 14.1607 87.7177 12.412 86.634 11.1681C85.5501 9.92432 83.893 9.30242 81.6624 9.30242C80.2314 9.30242 78.9477 9.61603 77.8113 10.2432C76.6749 10.8705 75.7858 11.7688 75.144 12.9382C74.5021 14.1076 74.1812 15.4683 74.1812 17.0205C74.1812 18.4025 74.4547 19.6729 75.002 20.8317C75.5491 21.9905 76.4013 22.9152 77.5587 23.6063ZM84.9452 15.8084C84.9662 14.4902 84.682 13.56 84.0928 13.0178C83.5036 12.4757 82.6619 12.2046 81.5675 12.2046C79.3579 12.2046 78.0848 13.4058 77.7481 15.8084H84.9452ZM88.5676 9.68508L94.5652 24.7703L91.4402 32.3608H94.9756L103.877 9.68508H100.152L96.901 18.9977L96.2067 21.2622L95.5122 18.9977L92.4187 9.68508H88.5676Z"
+          fill="#E1E1E7"
+        />
+      </svg>
+      <p className="cursor-default text-base">更受用户信赖的加密货币钱包</p>
+    </div>
+  )
+}
+
+const baseSpringTranstion = {
+  type: 'spring',
+  stiffness: 32,
+}
+
+const baseEaseTranstion = {
+  type: 'tween',
+  ease: 'easeInOut',
+}
+
+const DELAY = 0.8
 
 export default function Home() {
+  const inputRef = useRef<HTMLDivElement | null>()
+  const autoFocus = () => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
+  useEffect(() => {
+    autoFocus()
+  }, [])
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#1A1A20] py-2 text-[#E1E1E7]">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>OneKey</title>
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <main className="flex h-full w-full flex-col items-center justify-center">
+        <motion.div
+          animate={{
+            opacity: 1,
+            transition: {
+              delay: DELAY + 0.4,
+              duration: 0.8,
+              ...baseEaseTranstion,
+            },
+          }}
+          initial={{ opacity: 0 }}
+          className="absolute top-1/2 left-1/2 h-[56px] w-[326px] -translate-x-1/2 -translate-y-1/2 transform"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="ml-2 h-4" />
-        </a>
-      </footer>
+          <button className="absolute top-1/2 right-2 h-[40px] w-[80px] -translate-y-1/2 transform rounded-[13px] bg-[#4CB13C]  text-white hover:bg-[#42A832]">
+            解锁
+          </button>
+          <input
+            className="h-full w-full appearance-none rounded-[16px] border-2 border-[#4D4E5B] bg-[#2A2B34] px-4 text-base leading-tight focus:border-[#4CB13C] focus:outline-none"
+            id="Password"
+            type="password"
+            placeholder="请输入密码"
+            ref={inputRef}
+          ></input>
+        </motion.div>
+        <motion.div
+          animate={{
+            y: '-24vh',
+            transition: {
+              delay: DELAY,
+              ...baseSpringTranstion,
+            },
+          }}
+          initial={{ y: 0 }}
+          className="flex flex-col items-center justify-center gap-8 px-20 text-center"
+        >
+          <Logo />
+
+          <motion.div
+            animate={{
+              opacity: 0,
+              transition: {
+                delay: DELAY,
+                duration: 0.8,
+                ...baseEaseTranstion,
+              },
+            }}
+            initial={{ opacity: 1 }}
+          >
+            <Title />
+          </motion.div>
+        </motion.div>
+
+        <motion.p
+          animate={{
+            opacity: 1,
+            transition: {
+              delay: DELAY,
+              duration: 0.8,
+              ...baseEaseTranstion,
+            },
+          }}
+          initial={{ opacity: 0 }}
+          className="absolute bottom-8 text-sm text-[#4CB13C]"
+        >
+          忘记密码？
+        </motion.p>
+      </main>
     </div>
   )
 }
